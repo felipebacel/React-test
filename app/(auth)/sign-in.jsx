@@ -7,12 +7,30 @@ import FormField from '../../components/FormField'
 import { useState } from 'react';
 import CustomButton from '../../components/CustomButton'
 import { Link } from 'expo-router';
+import { FIREBASE_AUTH} from '../../firebaseConfig'
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const SignIn = () => {
 const [form, setForm] = useState({email:'',
    password:''})
    const [isSubmitting, setIsSubmitting] = useState(false)
    const submit = ()=>{}
+   const auth = FIREBASE_AUTH;
+
+   const logar = async () =>{
+     setIsSubmitting(true);
+      try {
+         const response = await signInWithEmailAndPassword(auth, form.email, form.password);
+         console.log(response);
+         alert('Cheque o endereço de email');
+         } catch (error){
+         console.log(error);
+         alert('login falhou'+ error.message);
+         } finally{
+         setIsSubmitting(false);
+    }
+
+   }
 
   return (
     <SafeAreaView className="bg-primary h-full ">
@@ -41,6 +59,7 @@ const [form, setForm] = useState({email:'',
             title='Logar'
             handlePress={submit}
             containerStyles='mt-7'
+            onPress = {logar}
             isLoading={isSubmitting}
           />
           <View className ='justify-center pt-5 flex-row gap-2'>

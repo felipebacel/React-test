@@ -7,7 +7,9 @@ import FormField from '../../components/FormField'
 import { useState } from 'react';
 import CustomButton from '../../components/CustomButton'
 import { Link } from 'expo-router';
-import { createUser} from '../../lib/appwrite'
+import { initializeAuth ,FIREBASE_AUTH } from '../../firebaseConfig';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+
 
 const SignUp = () => {
 const [form, setForm] = useState({
@@ -15,9 +17,24 @@ const [form, setForm] = useState({
    email:'',
    password:''})
    const [isSubmitting, setIsSubmitting] = useState(false)
-   const submit = ()=>{
-    createUser();
-   }
+   const submit = ()=> {}
+    const auth = FIREBASE_AUTH;
+    const Inscrever = async () =>{
+       setIsSubmitting(true);
+       try {
+          const response = await createUserWithEmailAndPassword(auth, form.email, form.password);
+          console.log(response);
+          alert('Cheque o endereço de email');
+          } catch (error){
+          console.log(error);
+          alert('Inscrição falhou'+ error.message);
+          } finally{
+          setIsSubmitting(false);
+     }
+ 
+    }
+    
+   
 
   return (
     <SafeAreaView className="bg-primary h-full ">
@@ -28,13 +45,7 @@ const [form, setForm] = useState({
           />
           <Text className="text-2xl text-white text-semibold font-psemibold">Inscreva-se no React-Ratings            
           </Text>
-          <FormField
-            title='Nome de usuario'
-            value={form.userName}
-            handleChangeText={(e) => setForm({...form,userName: e })}
-            otherStyles="mt-10"
-            
-          /> 
+          
           <FormField
             title='Email'
             value={form.email}
@@ -53,6 +64,7 @@ const [form, setForm] = useState({
             title='Inscrever-se'
             handlePress={submit}
             containerStyles='mt-7'
+            onPress = {Inscrever}
             isLoading={isSubmitting}
           />
           <View className ='justify-center pt-5 flex-row gap-2'>
