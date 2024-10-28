@@ -2,8 +2,12 @@ import { StyleSheet, Text, View } from 'react-native'
 import { SplashScreen,Stack } from 'expo-router'
 import { useFonts } from 'expo-font'
 import { useEffect } from 'react'
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import MovieScreen from "./MovieScreen";
 
 SplashScreen.preventAutoHideAsync();
+
 
 const rootLayout = () => {
   const [fontsLoaded, error] = useFonts({
@@ -36,6 +40,7 @@ const rootLayout = () => {
         <Stack.Screen name= "index" options={{headerShown: false}}/>
         <Stack.Screen name= "(auth)" options={{headerShown: false}}/>
         <Stack.Screen name= "tabs" options={{headerShown: false}}/>
+        <Stack.Screen name = "MovieScreen" options={{headerShown:false}}/> 
         {/*<Stack.Screen name= "/search/[query]" options={{headerShown: false}}/>*/}
     </Stack> 
   )

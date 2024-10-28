@@ -57,7 +57,6 @@ const [form, setForm] = useState({email:'',
           />
           <CustomButton
             title='Logar'
-            handlePress={submit}
             containerStyles='mt-7'
             onPress = {logar}
             isLoading={isSubmitting}
@@ -69,7 +68,12 @@ const [form, setForm] = useState({email:'',
               <Link href="/sign-up" className='text-lg font-psemibold text-secondary'>
                Inscreva-se
               </Link>
-
+              <View className='justify-center pt-5 items-center '>
+               <Link href="/tabs/home" className='text-lg font-psemibold text-secondary'>
+                 home
+               </Link>
+              </View>
+              
           </View>
 
         </View>

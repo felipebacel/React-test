@@ -62,7 +62,6 @@ const [form, setForm] = useState({
           />
           <CustomButton
             title='Inscrever-se'
-            handlePress={submit}
             containerStyles='mt-7'
             onPress = {Inscrever}
             isLoading={isSubmitting}
