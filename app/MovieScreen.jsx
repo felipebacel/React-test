@@ -9,6 +9,8 @@ import { Platform, Dimensions } from 'react-native';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
+import Cast from '../components/Cast';
+import MovieList from '../components/MovieList';
 
 
 var{width, height} = Dimensions.get('window');
@@ -19,6 +21,8 @@ const MovieScreen = () => {
   let movieName = 'Suzume no Tojimari';
   const {params: item} = useRoute();
   const [isFavourite, toggleFavourite] = useState(false)
+  const [cast, setCast] = useState([1,2,3,4,5])
+  const [similarMovies, setSimilarMovies] = useState([1,2,3])
   useEffect(()=>{
     // detalhes do filme
   },[item])
@@ -27,8 +31,8 @@ const MovieScreen = () => {
     
     >
       <View className='w-full'>
-        <SafeAreaView className={'absolute z-20 w-full flex-row justify-between items-center px-4'}>
-          <TouchableOpacity onPress={()=> router.push('/tabs/home')} className='rounded-xl p-1 bg-secondary'>
+        <SafeAreaView className={'absolute z-20 w-full flex-row justify-between items-center px-4'+topMargin}>
+          <TouchableOpacity onPress={()=> router.back('/tabs/home')} className='rounded-xl p-1 bg-secondary'>
             <ChevronLeftIcon size='28' strokeWidth={2.5} color='white'/>
           </TouchableOpacity>
           <TouchableOpacity onPress={()=> toggleFavourite(!isFavourite)}>
@@ -75,6 +79,8 @@ const MovieScreen = () => {
           </Text>
         </View>
       </View>
+      <Cast cast={cast}/>
+      <MovieList title='Filmes parecidos' hideSeeAll={true} data={similarMovies}/>
     </ScrollView>
   )
 }

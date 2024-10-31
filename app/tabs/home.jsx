@@ -8,6 +8,7 @@ import TrendingMovies from '../../components/TrendingMovies'
 import { useState } from 'react'
 import { Platform } from 'react-native';
 import MovieList from '../../components/MovieList'
+import { router } from 'expo-router'
 
 
 const ios = Platform.OS =='ios';
@@ -21,7 +22,7 @@ const Home = () => {
         <View className='flex-row justify-between items-center mx-4'>
         <Bars3CenterLeftIcon size="30" strokeWidth={2} color='white'/>
         <Text className='text-white text-3xl font-psemibold'>Filmes</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=> router.navigate('SearchScreen')}>
           <MagnifyingGlassIcon size='30' strokeWidth={2} color='white'/>
         </TouchableOpacity>
         </View>
