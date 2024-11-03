@@ -11,6 +11,9 @@ import { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import Cast from '../components/Cast';
 import MovieList from '../components/MovieList';
+import Home from './tabs/home';
+import Loading from '../components/Loading';
+import { fetchMovieCredits, fetchMovieDetails, fetchMovieSimilar, image500 } from '../api/MovieDB';
 
 
 var{width, height} = Dimensions.get('window');
@@ -20,12 +23,39 @@ const topMargin = ios?'':'mt-2'
 const MovieScreen = () => {
   let movieName = 'Suzume no Tojimari';
   const {params: item} = useRoute();
-  const [isFavourite, toggleFavourite] = useState(false)
-  const [cast, setCast] = useState([1,2,3,4,5])
-  const [similarMovies, setSimilarMovies] = useState([1,2,3])
   useEffect(()=>{
-    // detalhes do filme
+//chamar os detalhes do filme
+   // console.log('itemid: ', item.id);
+    setLoading(true);
+    getMovieDetails(item.id);
+    getMovieCredits(item.id);
+    getSimilarMovies(item.id);
   },[item])
+
+  const getMovieDetails = async id=>{
+    const data = await fetchMovieDetails(id);
+   // console.log('got movie details: ', data);
+    if(data) setMovie(data);
+    setLoading(false)
+  }
+  const getMovieCredits = async id=>{
+    const data = await fetchMovieCredits(id);
+    //console.log('got movie credits: ',data);
+    if(data && data.cast) setCast(data.cast);
+  }
+  const getSimilarMovies = async id=>{
+    const data = await fetchMovieSimilar(id);
+    //console.log('got similar movies: ',data);
+    if(data && data.results) setSimilarMovies(data.results);
+  }
+
+
+  const [isFavourite, toggleFavourite] = useState(false)
+  const [cast, setCast] = useState([])
+  const [similarMovies, setSimilarMovies] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [movie, setMovie] = useState({})
+
   return (
     <ScrollView contentContainerStyle={{paddingBottom:20}} className='flex-1 bg-primary'
     
@@ -39,31 +69,52 @@ const MovieScreen = () => {
             <HeartIcon size='35' color={isFavourite? '#FF8E01':'white'}/>
           </TouchableOpacity>
         </SafeAreaView>
-        <View>
-          <Image source={require('../assets/images/moviePoster1.png')}
-          style={{width, height: height*0.55}}
+        {loading? (<Loading/>
+        ):(
+           <View>
+            <Image 
+            source={{uri: image500(movie?.poster_path)}}
+            //source={require('../assets/images/moviePoster1.png')}
+            style={{width, height: height*0.55}}
           />
-          <LinearGradient colors={['transparent','rgba(23,23,23,0.4)','#161622']}
-          style={{width,height:height*0.40}}
-          start={{x:0.5,y:0}}
-          end={{x:0.5,y:1}}
-          className='absolute bottom-0'
+            <LinearGradient colors={['transparent','rgba(23,23,23,0.4)','#161622']}
+            style={{width,height:height*0.40}}
+            start={{x:0.5,y:0}}
+            end={{x:0.5,y:1}}
+            className='absolute bottom-0'
           >
           </LinearGradient>
         </View>
+        )
+        }
+        
       </View>
       <View style={{marginTop: -(height*0.09)}} className='space-y-3'>
         <Text className='text-white text-center text-3xl font-bold tracking-wider'>
-          {movieName}
+          {movie?.title}
         </Text>
-        <Text className='text-m font-psemibold text-gray-100 text-base text-center'>
-          Lançado * 2022 | Duração * 2h e 2min
-        </Text>
+        {movie?.id?(
+           <Text className='text-m font-psemibold text-gray-100 text-base text-center'>
+              {movie?.status} * {movie?.release_date?.split('-')[0]} | {movie?.runtime} min
+         </Text>
+        ):null
+        }
+        
+       
         <View className='flex-row justify-center mx-4 space-y-2'>
         <Text className='text-m font-psemibold text-gray-100 text-base text-center'>
             
           </Text>
-          <Text className='text-m font-psemibold text-gray-100 text-base text-center'>
+        {movie?.genres?.map((genre, index)=>{
+               let showDot = index+1 != movie.genres.lenght;
+              return(
+                <Text key={index} className='text-m font-psemibold text-gray-100 text-base text-center'>
+                  {genre?.name} {showDot? '>':null}
+                </Text>
+              )
+            })}
+       
+         {/* <Text className='text-m font-psemibold text-gray-100 text-base text-center'>
             Aventura *
           </Text>
           <Text className='text-m font-psemibold text-gray-100 text-base text-center'>
@@ -71,16 +122,16 @@ const MovieScreen = () => {
           </Text>
           <Text className='text-m font-psemibold text-gray-100 text-base text-center'>
              Drama
-          </Text>
+          </Text>*/}
         </View>
         <View>
           <Text className='text-gray-100 mx-4 tracking-wide'>
-          Do mesmo criador de Your Name, Suzume no Tojimari acompanha dois amantes desafortunatos. Suzume, uma garota de 17 anos que vive em uma pacata cidade em Kyushu, conhece um jovem em uma jornada “procurando portas”. Ela o segue até um prédio em ruínas nas montanhas e encontra uma porta, como se "só ela" fosse salva da devastação. Suzume se sente atraída por um poder invisível e estende a mão para a porta. Logo, portas em todo o Japão começam a se abrir uma após a outra. As portas que se abriram devem ser fechadas para fechar a calamidade que jaz do outro lado. Agora, começa a "jornada de fechar portas" de Suzume.
+           {movie?.overview}
           </Text>
         </View>
       </View>
-      <Cast cast={cast}/>
-      <MovieList title='Filmes parecidos' hideSeeAll={true} data={similarMovies}/>
+      {cast.length>0 && <Cast cast={cast}/>}
+      {similarMovies.length>0 &&<MovieList title='Filmes parecidos' hideSeeAll={true} data={similarMovies}/>}
     </ScrollView>
   )
 }

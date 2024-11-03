@@ -3,12 +3,14 @@ import React from 'react'
 import { TouchableWithoutFeedback } from 'react-native'
 import { router } from 'expo-router'
 import { useNavigation } from '@react-navigation/native';
+import { image185 } from '../api/MovieDB';
 
 var{width, height} = Dimensions.get('window');
 
 
 const MovieList = ({title, data, hideSeeAll}) => {
-    let nomeDoFilme ='Your Name'
+    const navigation = useNavigation();
+    
   
   return (
     <View className='mb-8 space-y-4'>
@@ -29,15 +31,17 @@ const MovieList = ({title, data, hideSeeAll}) => {
              return(
             <TouchableWithoutFeedback 
              key={index}
-             onPress={()=> router.push('/MovieScreen',item)}
+             onPress={()=> navigation.push('MovieScreen',item)}
             >
                  <View className='space-y-1 mr-4'>
-                 <Image source={require('../assets/images/MoviePoster2.png')}
+                 <Image
+                     source={{uri: image185(item.poster_path)}} 
+                     //source={require('../assets/images/MoviePoster2.png')}
                       className='rounded-3xl'
                       style={{width: width*0.33, height: height*0.22}}
                  />
                 <Text className='text-white ml-1'>
-                    {nomeDoFilme.length>14? nomeDoFilme.slice(0,14)+'...': nomeDoFilme}
+                    {item.title.length>14? item.title.slice(0,14)+'...': item.title}
 
                 </Text>
                 </View>

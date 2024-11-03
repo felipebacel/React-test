@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline'
@@ -9,13 +9,41 @@ import { useState } from 'react'
 import { Platform } from 'react-native';
 import MovieList from '../../components/MovieList'
 import { router } from 'expo-router'
+import { fetchTrendingMovies, fetchUpcomingMovies, fetchTopRatedMovies } from '../../api/MovieDB'
+import Loading from '../../components/Loading'
+
 
 
 const ios = Platform.OS =='ios';
 const Home = () => {
-  const [trending, seTrending] = useState([1,2,3])
-  const [upcoming, setUpcoming] = useState([1,2,3])
-  const [topRated, setTopRated] = useState([1,2,3])
+  const [trending, setTrending] = useState([])
+  const [upcoming, setUpcoming] = useState([])
+  const [topRated, setTopRated] = useState([])
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(()=>{
+    getTrendingMovies();
+    getUpcomingMovies();
+    getTopRatedMovies();
+  },[])
+
+  const getTrendingMovies = async ()=>{
+    const data = await fetchTrendingMovies();
+    console.log('got trending movies', data);
+    if(data && data.results) setTrending(data.results);
+    setLoading(false)
+  }
+  const getUpcomingMovies = async ()=>{
+    const data = await fetchUpcomingMovies();
+    console.log('got upcoming movies', data);
+    if(data && data.results) setUpcoming(data.results); 
+  }
+  const getTopRatedMovies = async ()=>{
+    const data = await fetchTopRatedMovies();
+    console.log('got top rated movies', data);
+    if(data && data.results) setTopRated(data.results);
+  }
   return (
     <View className='flex-1 bg-primary h-full'>
       <SafeAreaView className={ios?'-mb-2':'mb-3'}>
@@ -27,16 +55,24 @@ const Home = () => {
         </TouchableOpacity>
         </View>
       </SafeAreaView>
-      <ScrollView showsVerticalScrollIndicator={false}
-      contentContainerStyle={{paddingBottom:10}}
+
+      {
+        loading?(
+          <Loading/>
+        ):(
+          <ScrollView showsVerticalScrollIndicator={false}
+           contentContainerStyle={{paddingBottom:10}}
       >
-        <TrendingMovies data={trending}/>
+            {trending.length>0 && <TrendingMovies data={trending}/>}
 
-        <MovieList title='Lançamentos' data={upcoming}/>
+            <MovieList title='Lançamentos' data={upcoming}/>
 
-        <MovieList title='Melhores avaliações' data={topRated}/>
+            <MovieList title='Melhores avaliações' data={topRated}/>
 
-      </ScrollView>
+          </ScrollView>
+        )
+      }
+      
     </View>
   )
 }
