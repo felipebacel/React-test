@@ -90,7 +90,7 @@ const PersonScreen = () => {
             </View>
             <View className='border-r-2 border-r-gray px-2 items-center'>
                 <Text className='text-white font-psemibold'>Popularidade</Text>
-                <Text className='text-neutral-300 text-sm'>{person?.popularity.toFixed(2)}%</Text>
+                <Text className='text-neutral-300 text-sm'>{person?.popularity} %</Text>
             </View>
            
          </View>
