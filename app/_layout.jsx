@@ -1,13 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native'
-import { SplashScreen,Stack } from 'expo-router'
+import { SplashScreen, Stack } from 'expo-router'
 import { useFonts } from 'expo-font'
 import { useEffect } from 'react'
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import MovieScreen from "./MovieScreen";
+
 
 SplashScreen.preventAutoHideAsync();
-
 
 const rootLayout = () => {
   const [fontsLoaded, error] = useFonts({
@@ -24,27 +20,26 @@ const rootLayout = () => {
 
   useEffect(() => {
     if (error) throw error;
-  
+
     if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded, error]);
-  
+
   if (!fontsLoaded && !error) {
     return null;
   }
-  
-  
+
+
   return (
     <Stack>
-        <Stack.Screen name= "index" options={{headerShown: false}}/>
-        <Stack.Screen name= "(auth)" options={{headerShown: false}}/>
-        <Stack.Screen name= "tabs" options={{headerShown: false}}/>
-        <Stack.Screen name = "MovieScreen" options={{headerShown:false}}/>
-        <Stack.Screen name = "PersonScreen" options={{headerShown:false}}/>
-        <Stack.Screen name = "SearchScreen" options={{headerShown:false}}/>
-        
-    </Stack> 
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      <Stack.Screen name="tabs" options={{ headerShown: false }} />
+      <Stack.Screen name="MovieScreen" options={{ headerShown: false }} />
+      <Stack.Screen name="PersonScreen" options={{ headerShown: false }} />
+      <Stack.Screen name="SearchScreen" options={{ headerShown: false }} />
+    </Stack>
   )
 }
 
