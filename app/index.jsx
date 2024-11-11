@@ -5,6 +5,9 @@ import { router } from 'expo-router';
 
 import { images } from '../constants';
 import CustomButton from '../components/CustomButton'
+import { FIREBASE_AUTH } from '../firebaseConfig';
+import { GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
+import { useEffect } from 'react';
 
 
 export default function App() {
@@ -30,13 +33,12 @@ export default function App() {
 
             <CustomButton
               title="Bem Vindo"
-              handlePress={() => router.push('tabs/home')}
+              handlePress={() => router.push('sign-in')}
               contentContainerStyle="w-full mt-7"
             />
           </View>
         </View>
       </ScrollView>
-      
       <StatusBar style='light' />
     </SafeAreaView>
   );

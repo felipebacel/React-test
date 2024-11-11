@@ -23,6 +23,7 @@ const FormField = ({
           className="flex-1 text-white font-psemibold text-base"
           value={value}
           placeholder={placeholder}
+          autoCapitalize='none'
           placeholderTextColor="#7B7B8B"
           onChangeText={handleChangeText}
           secureTextEntry={title === "Senha" && !showPassword}
