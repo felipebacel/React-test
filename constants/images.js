@@ -1,4 +1,4 @@
-import profile from "../assets/images/profile.png";
+import profile from "../assets/images/kakashi.png";
 import profile_default from "../assets/images/profile_default.png";
 import thumbnail from "../assets/images/thumbnail.png";
 import cards from "../assets/images/cards.png";

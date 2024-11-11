@@ -12,16 +12,25 @@ const ios = Platform.OS == 'ios';
 const verticalMargin = ios ? '' : 'my-3'
 
 const Profile = () => {
+  const [logged, setLogged] = useState(false)
 
   const auth = FIREBASE_AUTH;
   const user = auth.currentUser;
 
-  const signOut = () => {
-    FIREBASE_AUTH.signOut();
-    alert('Deslogado com Sucesso!!');
-    router.back();
-  }
+  useEffect(() => {
+    if (user) {
+      setLogged(true);
+    }
+  }, [])
 
+  const signOut = () => {
+    if (user) {
+      FIREBASE_AUTH.signOut();
+      setLogged(false);
+      alert('Deslogado com Sucesso!!');
+      //router.back();
+    }
+  }
 
   return (
     <ScrollView className='flex-1 bg-primary' contentContainerStyle={{ paddingBottom: 20 }}>
@@ -34,7 +43,7 @@ const Profile = () => {
       <View className='flex-row justify-center'>
         <View className='items-center rounded-full overflow-hidden h-72 w-72 border-2 border-neutral-500'>
           <Image
-            source={user ? images.profile : images.profile_default}
+            source={logged ? images.profile : images.profile_default}
             style={{ height: 300, width: width * 0.74 }}
           />
         </View>
@@ -42,7 +51,10 @@ const Profile = () => {
 
       <View className='mt-6'>
         <Text className="text-xl text-white font-psemibold text-center">
-          {user?.email || "Desconectado"}
+          {logged ? user.email : "Desconectado"}
+        </Text>
+        <Text className='text-base text-gray-100 text-center'>
+          {logged ? "Uid: " + user.uid : ""}
         </Text>
       </View>
     </ScrollView>
