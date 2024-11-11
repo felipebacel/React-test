@@ -38,7 +38,7 @@ const SignIn = () => {
     <SafeAreaView className="bg-primary h-full ">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
         <View className="w-full justify-center min-h-[90vh] px-4 my-6">
-          <Text className="text-2xl text-white text-semibold font-psemibold">Logue no React-Ratings</Text>
+          <Text className="text-2xl text-white text-semibold font-psemibold">Logue no Movie Time</Text>
           <FormField
             title='Email'
             value={email}

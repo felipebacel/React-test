@@ -4,20 +4,20 @@ import { apiKey } from '../constants'
 //endpoint
 
 const apiBaseUrl = 'https://api.themoviedb.org/3'
-const trendingMoviesEndpoint = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`
-const upcomingMoviesEndpoint = `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}`
-const topRatedMoviesEndPoint = `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}`
+const trendingMoviesEndpoint = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=pt-BR`
+const upcomingMoviesEndpoint = `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=pt-BR`
+const topRatedMoviesEndPoint = `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=pt-BR`
 
 // endpoint dinamico
 
-const movieDetailsEndpoint = id => `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`
-const movieCreditsEndpoint = id => `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}`
-const movieSimilarEndpoint = id => `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${apiKey}`
-const searchMovieEndpoint = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}`
+const movieDetailsEndpoint = id => `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=pt-BR`
+const movieCreditsEndpoint = id => `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=pt-BR`
+const movieSimilarEndpoint = id => `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${apiKey}&language=pt-BR`
+const searchMovieEndpoint = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=pt-BR`
 
 
-const personDetailsEndpoint = id => `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}`
-const personMoviesEndpoint = id => `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${apiKey}`
+const personDetailsEndpoint = id => `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}&language=pt-BR`
+const personMoviesEndpoint = id => `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${apiKey}&language=pt-BR`
 
 
 export const image500 = path => path ? `https://image.tmdb.org/t/p/w500${path}` : null;

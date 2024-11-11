@@ -24,7 +24,7 @@ export default function App() {
           <View className="relative mt-5">
             <Text className="text-3xl text-white font-bold text-center">
               Redescubra o mundo do cinema com
-              <Text className="text-secondary-200"> React-Ratings</Text>
+              <Text className="text-secondary-200"> Movie Time </Text>
             </Text>
 
             <Text className="text-m font-pregular text-gray-100 my-5 text-center">
@@ -39,7 +39,7 @@ export default function App() {
           </View>
         </View>
       </ScrollView>
-      <StatusBar style='light' />
+      <StatusBar style='light'/>
     </SafeAreaView>
   );
 }

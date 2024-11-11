@@ -58,23 +58,6 @@ const TabsLayout = () => {
             )
           }}
         />
-        
-        <Tabs.Screen
-          name="favorites"
-          options={{
-            tittle: "favorites",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.bookmark}
-                color={color}
-                name="Favorites"
-                focused={focused}
-              />
-
-            )
-          }}
-        />
 
         <Tabs.Screen
           name="profile"

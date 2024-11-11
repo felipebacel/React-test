@@ -11,6 +11,7 @@ import { fetchMovieCredits, fetchMovieDetails, fetchMovieSimilar, image500 } fro
 import Cast from '../components/Cast';
 import MovieList from '../components/MovieList';
 import Loading from '../components/Loading';
+import { StatusBar } from 'expo-status-bar';
 
 
 var { width, height } = Dimensions.get('window');
@@ -127,6 +128,7 @@ const MovieScreen = () => {
       {cast.length > 0 && <Cast cast={cast} />}
 
       {similarMovies.length > 0 && <MovieList title='Filmes parecidos' hideSeeAll={true} data={similarMovies} />}
+      <StatusBar style='light'/>
     </ScrollView>
   )
 }

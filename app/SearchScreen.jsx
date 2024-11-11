@@ -19,7 +19,7 @@ const SearchScreen = () => {
       searchMovies({
         query: value,
         include_adult: 'false',
-        language: 'en-US',
+        language: 'pt-BR',
         page: '1'
       }).then(data => {
         //console.log('got movies: ', data);
